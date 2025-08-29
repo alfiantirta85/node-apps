@@ -21,12 +21,12 @@ A simple CRUD application with Node.js, Express, PostgreSQL, and vanilla JavaScr
 - Success/Error Messages - Visual feedback for all actions
 - Auto-refresh - Automatic data updates every 30 seconds
 
-## Requirements
+## 🏗️ Requirements
 
 1. Node.js
 2. PosgreSQL Database
 
-## Deployment Steps
+## 🖥️ Systemd Deployment
 
 1. Install Node.js
 
@@ -42,7 +42,6 @@ npm --version
 2. Install PostgreSQL
 
 ```bash
-# Install PostgreSQL
 sudo apt-get install -y postgresql postgresql-contrib
 sudo systemctl enable --now postgresql
 ```
@@ -61,6 +60,7 @@ GRANT ALL PRIVILEGES ON DATABASE [your-user-name] TO [your-user-name];
 4. Clone Source Code
 
 ```bash
+cd /opt
 git clone https://github.com/alfiantirta85/node-apps.git
 cd node-apps
 ```
@@ -83,5 +83,119 @@ npm install --production
 7. Start Node.js Server
 
 ```bash
-node server.js 
+npm start
+```
+
+8. Start Node.js Server as Service
+
+```bash
+nano /etc/systemd/system/node-apps.service
+---
+[Unit]
+Description=Node Apps
+After=network-online.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+User=root
+Group=root
+Type=simple
+Restart=on-failure
+RestartSec=5
+WorkingDirectory=/opt/node-apps
+ExecStart=/usr/bin/npm start
+
+[Install]
+WantedBy=multi-user.target
+---
+systemctl daemon-reload
+systemctl enable --now node-apps.service
+
+# Verify Service
+systemctl status node-apps.service
+```
+
+## 🐳 Docker Deployment
+
+1. Install Docker
+
+```bash
+apt-get install ca-certificates curl
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update
+apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+# Verify installation
+docker version
+docker compose version
+```
+
+2. Install PostgreSQL
+
+```bash
+sudo apt-get install -y postgresql postgresql-contrib
+sudo systemctl enable --now postgresql
+```
+
+3. Setup PostgreSQL
+
+```
+# Create database and user
+sudo -u postgres psql
+CREATE DATABASE [your-database-name];
+CREATE USER [your-user-name] WITH PASSWORD '[your-user-password]';
+GRANT ALL PRIVILEGES ON DATABASE [your-user-name] TO [your-user-name];
+\q
+
+# Connection settings
+
+nano /etc/postgresql/14/main/postgresql.conf
+...
+listen_addresses = '*'
+---
+
+nano /etc/postgresql/14/main/pg_hba.conf
+...
+host    all             all             172.31.0.1/24           scram-sha-256
+---
+
+systemctl restart postgresql
+```
+
+4. Clone Source Code
+
+```bash
+cd /opt
+git clone https://github.com/alfiantirta85/node-apps.git
+cd node-apps
+```
+
+5. Build Image
+
+```bash
+docker build -t node-apps .
+```
+
+6. Setup Database Environment
+
+```bash
+cp .env.example .env
+nano .env
+---
+-- CHANGE-YOUR-ENV --
+```
+
+7. Start Container
+
+```bash
+docker compose up -d
+
+# Verify Container
+docker ps
 ```
