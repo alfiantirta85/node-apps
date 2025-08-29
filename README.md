@@ -1,8 +1,30 @@
-# Sample Node Apps
+# 🚀 Sample Node Apps
 
-## Requirement
+A simple CRUD application with Node.js, Express, PostgreSQL, and vanilla JavaScript frontend.
 
-1. PosgreSQL Database
+## ✨ Features
+
+### 🎯 Core Functionality
+
+- Full CRUD Operations - Create, Read, Update, Delete users
+- RESTful API - Clean API endpoints with proper HTTP methods
+- Real-time UI Updates - Dynamic frontend without page refresh
+- Input Validation - Client and server-side validation
+- Error Handling - Comprehensive error management
+
+### 🎨 User Interface
+
+- Modern Design - Gradient backgrounds and clean aesthetics
+- Responsive Layout - Mobile-first design approach
+- Interactive Cards - Hover effects and smooth animations
+- Real-time Statistics - Live user count and metrics
+- Success/Error Messages - Visual feedback for all actions
+- Auto-refresh - Automatic data updates every 30 seconds
+
+## Requirements
+
+1. Node.js
+2. PosgreSQL Database
 
 ## Deployment Steps
 
@@ -17,14 +39,33 @@ node --version
 npm --version
 ```
 
-2. Clone Source Code
+2. Install PostgreSQL
+
+```bash
+# Install PostgreSQL
+sudo apt-get install -y postgresql postgresql-contrib
+sudo systemctl enable --now postgresql
+```
+
+3. Setup PostgreSQL
+
+```
+# Create database and user
+sudo -u postgres psql
+CREATE DATABASE [your-database-name];
+CREATE USER [your-user-name] WITH PASSWORD '[your-user-password]';
+GRANT ALL PRIVILEGES ON DATABASE [your-user-name] TO [your-user-name];
+\q
+```
+
+4. Clone Source Code
 
 ```bash
 git clone https://github.com/alfiantirta85/node-apps.git
 cd node-apps
 ```
 
-3. Setup Env File
+5. Setup Database Environment
 
 ```bash
 cp .env.example .env
@@ -33,13 +74,13 @@ nano .env
 -- CHANGE-YOUR-ENV --
 ```
 
-4. Install Requirements
+6. Install Requirements
 
 ```bash
 npm install --production
 ```
 
-5. Start Node.js Server
+7. Start Node.js Server
 
 ```bash
 node server.js 
