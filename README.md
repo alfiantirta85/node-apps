@@ -83,7 +83,6 @@ npm install --production
 7. Start Node.js Server
 
 ```bash
-<<<<<<< HEAD
 npm start
 ```
 
@@ -200,11 +199,7 @@ docker compose up -d
 # Verify Container
 docker ps
 ```
-=======
-node server.js 
-```
 
 ## Preview Apps
 
 <img width="1321" height="958" alt="2025-08-29_13-20" src="https://github.com/user-attachments/assets/44eb00a5-6d7a-49d1-affc-b2dc73d2b08b" />
->>>>>>> f90462ac33e5b9fc7b2677b44750dd84722cfec7
