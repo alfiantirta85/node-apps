@@ -9,10 +9,10 @@ const port = process.env.PORT || 3000;
 
 // Database configuration
 const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'cicd_app',
-  password: process.env.DB_PASSWORD || 'password',
+  user: process.env.DB_USER || 'iniuser',
+  host: process.env.DB_HOST || '127.0.0.1',
+  database: process.env.DB_NAME || 'node_apps',
+  password: process.env.DB_PASSWORD || 'inipassword',
   port: process.env.DB_PORT || 5432,
 });
 

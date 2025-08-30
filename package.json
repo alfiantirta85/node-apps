@@ -1,7 +1,7 @@
 {
-  "name": "cicd-sample-app",
-  "version": "1.2.0",
-  "description": "Sample CRUD application for CI/CD demonstration",
+  "name": "node-apps",
+  "version": "1.0.0",
+  "description": "User Management Application",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -15,7 +15,7 @@
     "crud",
     "cicd"
   ],
-  "author": "CI/CD Developer",
+  "author": "Alfian w/ claude.ai",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",

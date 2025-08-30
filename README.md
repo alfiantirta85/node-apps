@@ -136,39 +136,7 @@ docker version
 docker compose version
 ```
 
-2. Install PostgreSQL
-
-```bash
-sudo apt-get install -y postgresql postgresql-contrib
-sudo systemctl enable --now postgresql
-```
-
-3. Setup PostgreSQL
-
-```
-# Create database and user
-sudo -u postgres psql
-CREATE DATABASE [your-database-name];
-CREATE USER [your-user-name] WITH PASSWORD '[your-user-password]';
-GRANT ALL PRIVILEGES ON DATABASE [your-user-name] TO [your-user-name];
-\q
-
-# Connection settings
-
-nano /etc/postgresql/14/main/postgresql.conf
-...
-listen_addresses = '*'
----
-
-nano /etc/postgresql/14/main/pg_hba.conf
-...
-host    all             all             172.31.0.1/24           scram-sha-256
----
-
-systemctl restart postgresql
-```
-
-4. Clone Source Code
+2. Clone Source Code
 
 ```bash
 cd /opt
@@ -176,13 +144,22 @@ git clone https://github.com/alfiantirta85/node-apps.git
 cd node-apps
 ```
 
-5. Build Image
+3. Start PostgreSQL
 
 ```bash
-docker build -t node-apps .
+docker compose -f docker/db-compose.yml up -d
+
+# Verify DB
+docker ps
 ```
 
-6. Setup Database Environment
+4. Build Image
+
+```bash
+docker build -t node-apps -f docker/Dockerfile .
+```
+
+5. Setup Database Environment
 
 ```bash
 cp .env.example .env
@@ -191,12 +168,12 @@ nano .env
 -- CHANGE-YOUR-ENV --
 ```
 
-7. Start Container
+6. Start Container
 
 ```bash
-docker compose up -d
+docker compose up docker/app-compose.yml -d
 
-# Verify Container
+# Verify App
 docker ps
 ```
 
