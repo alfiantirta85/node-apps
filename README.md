@@ -171,7 +171,7 @@ nano .env
 6. Start Container
 
 ```bash
-docker compose up docker/app-compose.yml -d
+docker compose -f docker/app-compose.yml up -d
 
 # Verify App
 docker ps
